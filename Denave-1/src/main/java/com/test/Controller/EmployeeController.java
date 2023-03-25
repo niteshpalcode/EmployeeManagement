@@ -1,5 +1,7 @@
 package com.test.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.Entity.Department;
 import com.test.Entity.Employee;
 import com.test.Entity.EmployeeDTO;
+import com.test.Entity.Leaves;
 import com.test.Exception.EmployeeExcpetion;
+import com.test.Exception.LeaveException;
 import com.test.Service.DepartmentService;
 import com.test.Service.EmployeeService;
 
@@ -52,4 +56,36 @@ public class EmployeeController {
 		Employee emp=employeeService.assignMaangerToEmp(empid, manid);
 		return new ResponseEntity<>(emp,HttpStatus.CREATED);
 	}
+	
+	@PostMapping("requestLeave/{empId}")
+	public ResponseEntity<String> reuestLeaves(@PathVariable("empId") Integer empId,@RequestBody Leaves leaves) throws EmployeeExcpetion,LeaveException{
+		String str=employeeService.applyLeaves(empId, leaves);
+		return new ResponseEntity<>(str,HttpStatus.OK);
+	}
+	
+	@GetMapping("/allLeaves")
+	public ResponseEntity <List<Leaves>> allLeaves() throws LeaveException{
+		return new ResponseEntity<List<Leaves>>(employeeService.getAllLeav(),HttpStatus.ACCEPTED);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

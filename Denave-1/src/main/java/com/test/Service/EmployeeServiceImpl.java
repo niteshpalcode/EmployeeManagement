@@ -3,6 +3,7 @@ package com.test.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.NoResultException;
 
@@ -13,9 +14,12 @@ import org.yaml.snakeyaml.emitter.EmitterException;
 import com.test.Entity.Department;
 import com.test.Entity.Employee;
 import com.test.Entity.EmployeeDTO;
+import com.test.Entity.Leaves;
 import com.test.Exception.EmployeeExcpetion;
+import com.test.Exception.LeaveException;
 import com.test.repo.DepartmentRepo;
 import com.test.repo.EmployeeRepo;
+import com.test.repo.LeavesRepo;
 @Service
 public class EmployeeServiceImpl  implements EmployeeService{
 
@@ -24,6 +28,9 @@ public class EmployeeServiceImpl  implements EmployeeService{
 	
 	@Autowired
 	DepartmentRepo departmentRepo;
+	
+	@Autowired
+	LeavesRepo leavesRepo;
 //	List<Employee> list;
 //
 //	public EmployeeServiceImpl() {
@@ -101,6 +108,36 @@ public Employee assignMaangerToEmp(Integer empid, Integer mangerId) throws Emplo
 	    }
 	
 
+}
+
+@Override
+public String applyLeaves(Integer empId, Leaves leaves) throws EmployeeExcpetion, LeaveException {
+	// TODO Auto-generated method stub
+	Optional<Employee> emp=employeeRepo.findById(empId);
+	if(emp.isPresent()) {
+		 Employee employee = emp.get();
+	        Set<Leaves> leaveRequests = employee.getAllLeaves();
+	        leaveRequests.add(leaves);
+	        leaves.setEmployee(employee); 
+	        leavesRepo.save(leaves);
+	        employeeRepo.save(employee);
+		return "leave Requested";
+	}
+	else {
+		throw new EmployeeExcpetion("Employee is not fond");
+	}
+	
+}
+
+@Override
+public List<Leaves> getAllLeav() throws LeaveException {
+	// TODO Auto-generated method stub
+	
+	List<Leaves> allLeaves=leavesRepo.findAll();
+	if(allLeaves.isEmpty()) {
+		throw new LeaveException("No leaves");
+	}
+	return allLeaves;
 }
 
 	
