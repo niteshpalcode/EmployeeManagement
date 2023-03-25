@@ -13,8 +13,6 @@ import com.test.Exception.LeaveException;
 
 public interface EmployeeService {
 
-	
-//	fir adding the employee
 	public EmployeeDTO addEmployee(EmployeeDTO employee);
 	public List<Employee> getEmployee();
 	
@@ -23,8 +21,13 @@ public interface EmployeeService {
 	public Employee assignMaangerToEmp(Integer empid,Integer mangerId) throws EmployeeExcpetion;
 	
 	public String applyLeaves(Integer empId, Leaves leaves) throws EmployeeExcpetion,LeaveException;
+	
 	public List<Leaves> getAllLeav() throws LeaveException;
 
-//	empl> dept>manager
+
+//	when a manager is assigned to a employee than automatically department will set accordiig to the manager(bug)
+//	Particlar manager will see all the leaves, all the employees who are working under him.
+//	manager can aprrove a leave of a particular employee
+
 	
 }
