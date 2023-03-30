@@ -25,7 +25,7 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer empid;
-	private String name;
+	private String empName;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Department dept;
@@ -54,7 +54,7 @@ public class Employee {
 			Set<Leaves> allLeaves) {
 		super();
 		this.empid = empid;
-		this.name = name;
+		this.empName = name;
 		this.dept = dept;
 		this.manager = manager;
 		this.list_ofEmployees = list_ofEmployees;
@@ -73,12 +73,12 @@ public class Employee {
 
 
 	public String getName() {
-		return name;
+		return empName;
 	}
 
 
 	public void setName(String name) {
-		this.name = name;
+		this.empName = name;
 	}
 
 
